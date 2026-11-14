@@ -1,6 +1,7 @@
 README.md
 pyproject.toml
 src/av_msk_validator/ __init__.py
+src/av_msk_validator/__main__.py
 src/av_msk_validator/cli.py
 src/av_msk_validator/validator.py
 src/av_msk_validator.egg-info/PKG-INFO
