@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "av-msk-validator"
+version = "0.1.0"
+description = "Валидатор данных для проекта AV_MSK (XML-фид + изображения)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Sergey Fedorov", email = "nemets87@yandex.ru" }
+]
+keywords = ["validation", "xml", "qa", "av-msk"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+av-msk-validate = "av_msk_validator.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
