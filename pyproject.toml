@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "av-msk-validator"
-version = "0.1.0"
+version = "1.0.0"          # было 0.1.0
 description = "Валидатор данных для проекта AV_MSK (XML-фид + изображения)"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -42,3 +42,6 @@ addopts = "-q"
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "RUF"]   # явный набор

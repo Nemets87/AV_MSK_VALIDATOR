@@ -1,3 +1,4 @@
+cat > .gitignore <<'EOF'
 # Виртуальные окружения
 venv/
 .venv/
@@ -30,3 +31,4 @@ Thumbs.db
 # Локальные секреты
 .env
 .env.local
+EOF
