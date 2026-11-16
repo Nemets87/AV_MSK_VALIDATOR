@@ -1,0 +1,86 @@
+name: 'AV MSK Validator'
+description: 'Валидатор XML-фида и целостности связей «запись → изображение» для проекта AV_MSK'
+author: 'Sergey Fedorov'
+
+# Иконка и цвет для GitHub Marketplace (даже если не публикуешь — это хорошая практика)
+branding:
+  icon: 'check-circle'
+  color: 'green'
+
+# ────────────────────────────────────────────────────────────
+# ВХОДНЫЕ ПАРАМЕТРЫ (то, что пользователь передаёт через `with:`)
+# ────────────────────────────────────────────────────────────
+inputs:
+  feed-path:
+    description: 'Путь к XML-фиду (относительно корня вызывающего репозитория)'
+    required: false
+    default: 'feed.xml'
+
+  images-dir:
+    description: 'Путь к папке с изображениями'
+    required: false
+    default: 'public_images'
+
+  strict:
+    description: 'Считать «сиротские» картинки ошибкой (true/false)'
+    required: false
+    default: 'false'
+
+  python-version:
+    description: 'Версия Python для запуска валидатора'
+    required: false
+    default: '3.11'
+
+# ────────────────────────────────────────────────────────────
+# ВЫХОДНЫЕ ПАРАМЕТРЫ (то, что можно прочитать через `steps.<id>.outputs`)
+# ────────────────────────────────────────────────────────────
+outputs:
+  result:
+    description: 'Результат валидации: success или failure'
+    value: ${{ steps.validate.outputs.result }}
+
+# ────────────────────────────────────────────────────────────
+# САМ ЗАПУСК (composite = набор шагов, как в обычном workflow)
+# ────────────────────────────────────────────────────────────
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install av-msk-validator
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        # github.action_path — путь к папке действия в раннере (в кэше или в чекауте)
+        pip install "${{ github.action_path }}"
+
+    - name: Run validation
+      id: validate
+      shell: bash
+      run: |
+        # Отключаем exit-on-error, чтобы поймать код возврата вручную
+        set +e
+
+        if [ "${{ inputs.strict }}" = "true" ]; then
+          av-msk-validate \
+            --feed "${{ inputs.feed-path }}" \
+            --images "${{ inputs.images-dir }}" \
+            --strict
+        else
+          av-msk-validate \
+            --feed "${{ inputs.feed-path }}" \
+            --images "${{ inputs.images-dir }}"
+        fi
+
+        EXIT_CODE=$?
+
+        if [ "$EXIT_CODE" -eq 0 ]; then
+          echo "result=success" >> "$GITHUB_OUTPUT"
+        else
+          echo "result=failure" >> "$GITHUB_OUTPUT"
+        fi
+
+        exit "$EXIT_CODE"

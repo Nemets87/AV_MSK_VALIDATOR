@@ -15,7 +15,8 @@ Description-Content-Type: text/markdown
 Provides-Extra: dev
 Requires-Dist: pytest>=8; extra == "dev"
 Requires-Dist: pytest-cov>=5; extra == "dev"
-Requires-Dist: ruff>=0.6; extra == "dev"
+Requires-Dist: ruff==0.17.5; extra == "dev"
+Requires-Dist: pyyaml>=6; extra == "dev"
 
 # AV_MSK_VALIDATOR
 Validator_for_AV_MSK

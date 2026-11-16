@@ -8,4 +8,4 @@ AV MSK Validator — валидатор целостности XML-фида и �
 from .validator import ValidationResult, validate
 
 __version__ = "0.1.0"
-__all__ = ["validate", "ValidationResult", "__version__"]
+__all__ = ["ValidationResult", "__version__", "validate"]

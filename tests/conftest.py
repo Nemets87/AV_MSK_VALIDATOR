@@ -8,11 +8,10 @@ r"""
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 import pytest
-
 
 # Тип-алиас для фабрики фидов: вызываешь — получаешь Path к созданному файлу
 FeedFactory = Callable[..., Path]
