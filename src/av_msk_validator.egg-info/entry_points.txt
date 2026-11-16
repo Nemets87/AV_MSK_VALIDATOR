@@ -1,2 +1,0 @@
-[console_scripts]
-av-msk-validate = av_msk_validator.cli:main

@@ -1,10 +1,32 @@
+# Виртуальные окружения
 venv/
 .venv/
+env/
+
+# Python-кэш
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+.ruff_cache/
+
+# Покрытие
 .coverage
+.coverage.*
 htmlcov/
+
+# Сборка
 dist/
 build/
+
+# IDE
+.idea/
+.vscode/
+
+# ОС
+.DS_Store
+Thumbs.db
+
+# Локальные секреты
+.env
+.env.local
